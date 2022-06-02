@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "heslo-app.fullname" . }}-app
+data:
+  app.json: |
+    {{- tpl (.Files.Get "config/app.json") . | nindent 4 }}

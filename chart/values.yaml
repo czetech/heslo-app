@@ -1,0 +1,111 @@
+# String to override the name of the chart
+nameOverride: ""
+
+# String to override a default fully qualified app name
+fullnameOverride: ""
+
+coreApi: http://heslo-core/api/v1/
+
+# App container image
+image:
+
+  # Image repository
+  repository: tempero-app
+
+  # Image tag
+  tag: ""
+
+  # Image pull policy (imagePullPolicy of a container)
+  # ref: https://kubernetes.io/docs/concepts/containers/images/#updating-images
+  pullPolicy: IfNotPresent
+
+  # Registry secret (imagePullSecrets of a pod)
+  # ref: https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry
+  secrets: []
+
+# Deployment http
+http:
+
+  # Deployment annotations
+  annotations: {}
+
+  # Number of replicas
+  replicaCount: 1
+
+  # Pod annotations
+  podAnnotations: {}
+
+  # Affinity for pod assignment
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+
+  probes: true
+
+  # Lifecycle hooks for containers
+  # ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
+  lifecycle: {}
+
+  # Resources for containers
+  # ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+  resources: {}
+
+  # Node labels for pod assignment
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
+  nodeSelector: {}
+
+  # Tolerations for pod assignment
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  tolerations: []
+
+  # Service
+  service:
+
+    # Service annotations
+    annotations: {}
+
+    # Service type
+    # ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+    type: ClusterIP
+
+    # Service port
+    port: 80
+
+    # Node port
+    nodePort: null
+
+ingress:
+
+  # -- Ingress record generation
+  enabled: false
+
+  # -- (string) Ingress class name
+  className: null
+
+  # -- Ingress annotations
+  annotations: {}
+
+  # -- Ingress [TLS certificates][k8s-tls]
+  tls: []
+
+  # -- List of hosts pointing to an application (list of strings)
+  hosts: []
+
+  # -- Path pointing to an application (the format depends on the Kubernetes
+  # provider)
+  path: /
+
+  # -- Ingress [path type][k8s-pathtype]
+  pathType: ImplementationSpecific
+
+  # -- Additional arbitrary paths that may need to be added to the ingress
+  # before the main path (see example in [values.yaml])
+  precedingPaths: []
+  # Example for ALB ingress controller that requires a special rule to handle
+  # SSL redirects:
+  # - path: /*
+  #   backend:
+  #     serviceName: ssl-redirect
+  #     servicePort: use-annotation
+
+  # -- Same as precedingPaths but added after the main path
+  succeedingPaths: []

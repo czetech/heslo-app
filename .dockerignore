@@ -1,0 +1,10 @@
+# Docker
+/Dockerfile
+/.dockerignore
+
+# Git repository
+/.git/
+/.gitignore
+
+# Helm chart
+/chart/

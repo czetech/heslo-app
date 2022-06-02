@@ -1,0 +1,16 @@
+apiVersion: v2
+name: heslo-app
+version: 1.0.0
+kubeVersion: ">= 1.14.0-0"
+description: Heslo mobile app & SPA
+type: application
+keywords:
+- heslo
+home: https://heslo.cze.tech/
+sources:
+- https://github.com/czetech/heslo-app
+maintainers:
+- name: Petr Czepiec
+  email: petr@czepiec.me
+  url: https://czepiec.me/
+appVersion: 4.4.0

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "heslo-app.fullname" . }}-http
+  labels:
+    {{- include "heslo-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: http
+  annotations:
+    {{- toYaml .Values.http.annotations | nindent 4 }}
+spec:
+  replicas: {{ .Values.http.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "heslo-app.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: http
+  template:
+    metadata:
+      labels:
+        {{- include "heslo-app.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: http
+      annotations:
+        {{- if .Values.http.podAnnotations }}
+        {{- toYaml .Values.http.podAnnotations | nindent 8 }}
+        {{- end }}
+    spec:
+      affinity:
+        {{- toYaml .Values.http.affinity | nindent 8 }}
+      containers:
+      - name: heslo-app
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: 80
+        lifecycle:
+          {{- toYaml .Values.http.lifecycle | nindent 10 }}
+        resources:
+          {{- toYaml .Values.http.resources | nindent 10 }}
+        volumeMounts:
+        - name: config-app
+          mountPath: /var/lib/nginx/html/assets/config/app.json
+          subPath: app.json
+      imagePullSecrets:
+        {{- toYaml .Values.image.secrets | nindent 8 }}
+      nodeSelector:
+        {{- toYaml .Values.http.nodeSelector | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.http.tolerations | nindent 8 }}
+      volumes:
+      - name: config-app
+        configMap:
+          name: {{ include "heslo-app.fullname" . }}-app
